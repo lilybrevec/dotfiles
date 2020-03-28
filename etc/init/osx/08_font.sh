@@ -1,2 +1,2 @@
-cp -f /usr/local/opt/ricty/share/fonts/Ricty*.ttf ~/Library/Fonts/
-fc-cache -vf
+brew tap homebrew/cask-fonts
+brew cask install font-ricty-diminished
