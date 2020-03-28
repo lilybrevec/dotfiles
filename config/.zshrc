@@ -89,6 +89,10 @@ export PKG_CONFIG_PATH="/usr/local/opt/ncurses/lib/pkgconfig"
 #export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
 export LC_CTYPE="en_US.UTF-8"
 
+# goenv
+export GOPATH=$HOME/go/1.12.7
+export PATH=$GOPATH/bin:$PATH
+
 ##################################################
 ##### OTHER ALIAS
 ##################################################
@@ -105,6 +109,24 @@ alias jiq='.local/lib/go/1.12.7/bin/jiq'
 alias reload="(exec $SHELL -l)"
 alias vim='nvim'
 alias vi='nvim'
+
+alias g='git'
+alias -g B='`git branch -a | peco --prompt "GIT BRANCH>" | head -n 1 | sed -e "s/^\*\s*//g"`'
+alias -g R='`git remote | peco --prompt "GIT REMOTE>" | head -n 1`'
+alias -g H='`curl -sL https://api.github.com/users/chojuku/repos | jq -r ".[].full_name" | peco --prompt "GITHUB REPOS>" | head -n 1`'
+alias -g LR='`git branch -a | peco --query "remotes/ " --prompt "GIT REMOTE BRANCH>" | head -n 1 | sed "s/remotes\/[^\/]*\/\(\S*\)/\1 \0/"`'
+alias '..'='cd ..'
+alias -g ...='../..'
+alias -g ....='../../..'
+alias -g .....='../../../..'
+
+alias -g G='| grep'
+alias -g L='| less'
+alias -g H='| head'
+alias -g T='| tail'
+alias -g S='| sed'
+alias -g C='| cat'
+
 
 if [ "$(uname)" = "Darwin" ]; then
   source $HOME/dotfiles/config/.zshrc-alias-mac
