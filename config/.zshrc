@@ -112,4 +112,4 @@ fi
 ##################################################
 ##### PATH
 ##################################################
-export PATH="/usr/local/lib:/usr/local/bin:$HOME/dotfiles/bin:$HOME/.config/bin:$PATH"
+export PATH="$HOME/.local/bin:/usr/local/lib:/usr/local/bin:$HOME/dotfiles/bin:$HOME/.config/bin:$PATH"
