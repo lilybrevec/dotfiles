@@ -2,17 +2,35 @@
 ##### ZPLUGIN
 ##################################################
 
-### Added by Zplugin's installer
-source $HOME/.zplugin/bin/zplugin.zsh
-autoload -Uz _zplugin
-(( ${+_comps} )) && _comps[zplugin]=_zplugin
-### End of Zplugin's installer chunk
+### Added by Zinit's installer
+if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
+    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
+    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
+        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+        print -P "%F{160}▓▒░ The clone has failed.%f%b"
+fi
 
-zplugin light "zsh-users/zsh-completions"
-zplugin light "mollifier/cd-bookmark"
-zplugin light "mollifier/cd-gitroot"
-zplugin light "mollifier/anyframe"
-zplugin load  "zsh-users/zsh-syntax-highlighting"
+source "$HOME/.zinit/bin/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zinit-zsh/z-a-patch-dl \
+    zinit-zsh/z-a-as-monitor \
+    zinit-zsh/z-a-bin-gem-node
+
+### End of Zinit's installer chunk
+
+
+zinit light "zsh-users/zsh-completions"
+zinit light "mollifier/cd-bookmark"
+zinit light "mollifier/cd-gitroot"
+zinit light "mollifier/anyframe"
+zinit light "sorin-ionescu/prezto"
+zinit load  "zsh-users/zsh-syntax-highlighting"
 
 
 # Source Prezto.
@@ -63,8 +81,8 @@ alias ptmux='anyframe-source-tmux-sessions'
 ##### FOR LANGUAGE
 ##################################################
 # anyenv
-eval "$(anyenv init -)"
 export PATH="$HOME/.anyenv/bin:$PATH"
+eval "$(anyenv init -)"
 
 # OCaml
 eval `opam config env`
