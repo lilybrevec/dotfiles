@@ -72,7 +72,7 @@
 ;;(cl-loop for c from ?! to ?~ do (one-prefix-avy "H-" c) finally (cl-return t))
 
 ;; ivy設定
-(require 'ivy)
+(use-package ivy)
 (ivy-mode 1)
 (setq ivy-use-virtual-buffers t)
 (setq enable-recursive-minibuffers t)
@@ -160,10 +160,13 @@
 ;;;;    Language Setting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; For web(HTML,JavaScript,CSS) mode
-(require 'web-mode)
+(use-package web-mode)
 
 ;; For rust mode
-(use-package rustic)
+;;(use-package rustic)
+(use-package lsp-mode)
+(setq lsp-keymap-prefix "C-l")
+(add-hook 'rust-analyzer-mode-hook #'lsp)
 
 ;; Setting For custome file
 ;; http://extra-vision.blogspot.com/2016/10/emacs25-package-selected-packages.html

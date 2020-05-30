@@ -29,7 +29,7 @@ zinit light "zsh-users/zsh-completions"
 zinit light "mollifier/cd-bookmark"
 zinit light "mollifier/cd-gitroot"
 zinit light "mollifier/anyframe"
-zinit light "sorin-ionescu/prezto"
+#zinit light "sorin-ionescu/prezto"
 zinit load  "zsh-users/zsh-syntax-highlighting"
 
 

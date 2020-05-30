@@ -9,7 +9,6 @@
     "editor.wordWrap": "on",
     "terminal.integrated.lineHeight": 0.6,
     "typescript.locale": "ja",
-    "editor.insertSpaces": true,
     "editor.renderWhitespace": "all",
     "editor.tabCompletion": "on",
     "editor.tabSize": 2,
@@ -130,5 +129,10 @@
     },
     "[javascript]": {
         "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "aws.telemetry": true,
+    "editor.detectIndentation": false,
+    "[rust]": {
+      "editor.defaultFormatter": "matklad.rust-analyzer"
     },
 }
