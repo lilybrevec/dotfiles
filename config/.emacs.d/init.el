@@ -3,16 +3,29 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Import Melpa
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
+                    (not (gnutls-available-p))))
+       (proto (if no-ssl "http" "https")))
+  (when no-ssl (warn "\
+Your version of Emacs does not support SSL connections,
+which is unsafe because it allows man-in-the-middle attacks.
+There are two things you can do about this warning:
+1. Install an Emacs version that does support SSL and be safe.
+2. Remove this warning from your init file so you won't see it again."))
+  (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
+  ;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
+  ;; and `package-pinned-packages`. Most users will not need or want to do this.
+  ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
+  )
 (package-initialize)
 
-(setq flycheck-emacs-lisp-load-path 'inherit)
 ;; add load-path
 (if (file-directory-p "~/.emacs.d/elisp")
   (add-to-list 'load-path "~/.emacs.d/elisp"))
 
 (eval-when-compile
   (require 'use-package))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;    System Setting
@@ -81,19 +94,20 @@
 (setq ivy-re-builders-alist
       '((t . ivy--regex-plus)))
 
-;; counsel設定
-(global-set-key (kbd "M-x") 'counsel-M-x)
-(global-set-key (kbd "C-x C-f") 'counsel-find-file)
-(setq counsel-find-file-ignore-regexp (regexp-opt '("./" "../")))
-
-(global-set-key (kbd "C-c g") 'counsel-git)
-(global-set-key (kbd "C-c j") 'counsel-git-grep)
-
+;; neotree設定
 (setq neo-theme 'ascii) ;; icon, classic等もあるよ！
 (setq neo-persist-show t) ;; delete-other-window で neotree ウィンドウを消さない
 (setq neo-smart-open t) ;; neotree ウィンドウを表示する毎に current file のあるディレクトリを表示する
 (setq neo-smart-open t)
 (global-set-key "\C-o" 'neotree-toggle)
+
+;; counsel設定
+;(global-set-key (kbd "M-x") 'counsel-M-x)
+;(global-set-key (kbd "C-x C-f") 'counsel-find-file)
+;(setq counsel-find-file-ignore-regexp (regexp-opt '("./" "../")))
+
+;(global-set-key (kbd "C-c g") 'counsel-git)
+;(global-set-key (kbd "C-c j") 'counsel-git-grep)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;    Key Setting
