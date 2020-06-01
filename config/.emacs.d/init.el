@@ -182,12 +182,16 @@ There are two things you can do about this warning:
 (setq lsp-keymap-prefix "C-l")
 (add-hook 'rust-analyzer-mode-hook #'lsp)
 
+;; For C
+(add-hook 'c++-mode-hook 'company-mode) ; 補完用
+(add-hook 'c++-mode-hook 'flycheck-mode) ; チェック用
+(add-hook 'c++-mode-hook #'lsp)
+
 ;; Setting For custome file
 ;; http://extra-vision.blogspot.com/2016/10/emacs25-package-selected-packages.html
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)
   (load custom-file))
-
 
 ;; For tuareg-mode ocaml
 ;;(load "tuareg-ochadai" t)
