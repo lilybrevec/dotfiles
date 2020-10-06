@@ -121,18 +121,22 @@ There are two things you can do about this warning:
 (define-key global-map "\M-?" 'help-for-help)
 ;; \C-\の日本語入力の設定を無効にする
 (define-key global-map "\C-\\" nil)
-;; undo
-(global-set-key (kbd "C-q") 'undo)
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;    Editor Setting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ;; Setting for Japanese and UTF-8
 (set-language-environment "Japanese")
 (prefer-coding-system 'utf-8)
 (setq coding-system-for-read 'utf-8)
 (setq coding-system-for-write 'utf-8)
+
+;; Theme:It should be read at first
+;;(load-theme 'misterioso t)
+;;(load-theme 'dichromacy t)
+(load-theme 'spolsky t)
+
 
 ;; font settings
 (set-face-attribute 'default nil
@@ -150,11 +154,12 @@ There are two things you can do about this warning:
 (setq-default tab-width 2 indent-tabs-mode nil)
 (put 'upcase-region 'disabled nil)
 ;; 行番号表示
-(global-linum-mode t)
+(require 'linum)
 (setq linum-format "%3d ")
 (set-face-attribute 'linum nil
-                    :foreground "#f00"
+                    :foreground "#18ebf9"
                     :height 0.9)
+(global-linum-mode t)
 ;; 行末の空白を強調表示
 (setq-default show-trailing-whitespace t)
 (set-face-background 'trailing-whitespace "#b14770")
@@ -165,9 +170,7 @@ There are two things you can do about this warning:
 (setq cua-enable-cua-keys nil)
 ;; Auto-Complete
 (ac-config-default)
-;; theme
-(load-theme 'misterioso t)
-;;(load-theme 'dichromacy t)
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -195,7 +198,55 @@ There are two things you can do about this warning:
 
 ;; For tuareg-mode ocaml
 ;;(load "tuareg-ochadai" t)
-(add-to-list 'auto-mode-alist '("\\.ml[iylp]?" . tuareg-mode))
-(autoload 'tuareg-mode "tuareg" "Major mode for editing OCaml code" t)
-(autoload 'tuareg-run-ocaml "tuareg" "Run an inferior OCaml process." t)
-(autoload 'ocamldebug "ocamldebug" "Run the OCaml debugger" t)
+;;(add-to-list 'auto-mode-alist '("\\.ml[iylp]?" . tuareg-mode))
+;;(autoload 'tuareg-mode "tuareg" "Major mode for editing OCaml code" t)
+;;(autoload 'tuareg-run-ocaml "tuareg" "Run an inferior OCaml process." t)
+;;(autoload 'ocamldebug "ocamldebug" "Run the OCaml debugger" t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;    For Org Mode
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 画像をインラインで表示
+(setq org-startup-with-inline-images t)
+;; 見出しの余分な*を消す
+(setq org-hide-leading-stars t)
+;; LOGBOOK drawerに時間を格納する
+(setq org-clock-into-drawer t)
+;; .orgファイルは自動的にorg-mode
+(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+;; org-directory内のファイルすべてからagendaを作成する
+(setq org-directory "~/org")
+(setq org-default-notes-file "notes.org")
+(setq my-org-agenda-dir "~/org/")
+(setq org-agenda-files (list my-org-agenda-dir))
+;; TODO状態
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "WAIT(w)" "NOTE(n)"  "|" "DONE(d)" "SOMEDAY(s)" "CANCEL(c)")))
+;; DONEの時刻を記録
+(setq org-log-done 'time)
+
+;;capture
+(setq org-capture-templates
+      '(("n" "Note" entry (file+headline "~/org/notes.org" "Notes")
+         "* %?\nEntered on %U\n %i\n %a")
+        ))
+
+;; ショートカットキー
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
+
+; http://www.mhatta.org/wp/2018/08/16/org-mode-101-1/
+; メモをC-M-^一発で見るための設定
+; https://qiita.com/takaxp/items/0b717ad1d0488b74429d から拝借
+(defun show-org-buffer (file)
+  "Show an org-file FILE on the current buffer."
+  (interactive)
+  (if (get-buffer file)
+      (let ((buffer (get-buffer file)))
+        (switch-to-buffer buffer)
+        (message "%s" file))
+    (find-file (concat "~/ownCloud/Org/" file))))
+(global-set-key (kbd "C-M-^") '(lambda () (interactive)
+                                 (show-org-buffer "notes.org")))
