@@ -9,7 +9,6 @@
     "editor.wordWrap": "on",
     "terminal.integrated.lineHeight": 0.6,
     "typescript.locale": "ja",
-    "editor.renderWhitespace": "all",
     "editor.tabCompletion": "on",
     "editor.tabSize": 2,
     "editor.minimap.enabled": true,
@@ -135,4 +134,8 @@
     "[rust]": {
       "editor.defaultFormatter": "matklad.rust-analyzer"
     },
+    "python.languageServer": "Microsoft",
+    "editor.renderWhitespace": "boundary",
+    "python.dataScience.alwaysTrustNotebooks": true,
+    "git.autofetch": true,
 }

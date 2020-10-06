@@ -84,6 +84,11 @@ alias ptmux='anyframe-source-tmux-sessions'
 export PATH="$HOME/.anyenv/bin:$PATH"
 eval "$(anyenv init -)"
 
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
 # OCaml
 eval `opam config env`
 export OCAMLMAKEFILE=".opam/default/lib/ocaml-makefile/OCamlMakefile"
@@ -108,7 +113,7 @@ export PKG_CONFIG_PATH="/usr/local/opt/ncurses/lib/pkgconfig"
 export LC_CTYPE="en_US.UTF-8"
 
 # goenv
-export GOPATH=$HOME/go/1.12.7
+export GOPATH=$HOME/go/1.14.6/
 export PATH=$GOPATH/bin:$PATH
 
 ##################################################
@@ -144,7 +149,12 @@ alias -g H='| head'
 alias -g T='| tail'
 alias -g S='| sed'
 alias -g C='| cat'
+alias -g dsrm="find . -name '.DS_Store' -type f -delete"
 
+alias ekill='emacsclient -e "(kill-emacs)"'
+alias e='emacsclient -nw -a ""'
+alias emacs='emacsclient -nw -a ""'
+alias emacsstart='brew services start emacs'
 
 if [ "$(uname)" = "Darwin" ]; then
   source $HOME/dotfiles/config/.zshrc-alias-mac
