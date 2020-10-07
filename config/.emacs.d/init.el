@@ -121,6 +121,8 @@ There are two things you can do about this warning:
 (define-key global-map "\M-?" 'help-for-help)
 ;; \C-\の日本語入力の設定を無効にする
 (define-key global-map "\C-\\" nil)
+;;reload
+(global-set-key [f12] 'eval-buffer)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;    Editor Setting
@@ -180,10 +182,11 @@ There are two things you can do about this warning:
 (use-package web-mode)
 
 ;; For rust mode
-;;(use-package rustic)
-(use-package lsp-mode)
-(setq lsp-keymap-prefix "C-l")
-(add-hook 'rust-analyzer-mode-hook #'lsp)
+(use-package rustic)
+(add-to-list 'exec-path (expand-file-name "~/.cargo/bin/"))
+(setq-default rustic-format-trigger 'on-save)
+(setq rustic-lsp-server 'rust-analyzer)
+(setq-default tab-width 2 indent-tabs-mode nil)
 
 ;; For C
 (add-hook 'c++-mode-hook 'company-mode) ; 補完用
@@ -247,6 +250,9 @@ There are two things you can do about this warning:
       (let ((buffer (get-buffer file)))
         (switch-to-buffer buffer)
         (message "%s" file))
-    (find-file (concat "~/ownCloud/Org/" file))))
-(global-set-key (kbd "C-M-^") '(lambda () (interactive)
+    (find-file (concat "~/org/" file))))
+(global-set-key (kbd "\C-^") '(lambda () (interactive)
                                  (show-org-buffer "notes.org")))
+;; magit
+(require 'magit)
+(define-key global-map (kbd "\C-i") 'magit-status)
